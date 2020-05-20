@@ -52,7 +52,7 @@ public class Brain {
      * @return a random element (move) from the list
      * @return 0 if the given list is empty
      */
-    private int randomMove(List<Integer> moves) {
+     int randomMove(List<Integer> moves) {
         if(moves.size() == 0) // when the list is empty
             return 0;
 
@@ -60,21 +60,21 @@ public class Brain {
         return moves.get( r.nextInt(moves.size()) );
     }
 
-    private String mirrorState(String state) {
-        int[] mirrored = new int[9];
+     String mirrorState(String state) {
+        int[] mirrored = new int[6];
 
-        for(int i = 0; i < 9; i++) {
-            mirrored[i] = mirrorMove( Integer.valueOf(state.charAt( mirrorMove(i+1)-1 )) );
+        for(int i = 0; i < 6; i++) {
+            mirrored[i] = mirrorMove( Character.getNumericValue(state.charAt( mirrorMove(i+1)-1 )) );
         }
 
         state = "";
-        for(int i = 0; i < 9; i++)
+        for(int i = 0; i < 6; i++)
             state += String.valueOf(mirrored[i]);
 
         return state;
     }
 
-    private int mirrorMove(int move) {
+     int mirrorMove(int move) {
 
         if(move == 0)
             return 0;
@@ -86,6 +86,14 @@ public class Brain {
         }
 
         return move;
+    }
+
+    public void punish() {
+
+    }
+
+    public void revard() {
+
     }
 
 }
