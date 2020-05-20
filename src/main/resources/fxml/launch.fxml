@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LaunchController">
+   <children>
+      <Label layoutX="357.0" layoutY="42.0" prefHeight="63.0" prefWidth="192.0" text="Hexapawn" textAlignment="CENTER">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="107.0" layoutY="135.0" prefHeight="54.0" prefWidth="165.0" text="Player">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <Label layoutX="615.0" layoutY="135.0" prefHeight="54.0" prefWidth="144.0" text="Enemy">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <TextField fx:id="player_name" layoutX="104.0" layoutY="232.0" promptText="Name" />
+      <VBox layoutX="615.0" layoutY="189.0" prefHeight="82.0" prefWidth="277.0">
+         <children>
+            <RadioButton mnemonicParsing="false" prefHeight="19.0" prefWidth="216.0" text="Select Existing:">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+               <toggleGroup>
+                  <ToggleGroup fx:id="enemy" />
+               </toggleGroup>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </RadioButton>
+            <MenuButton mnemonicParsing="false" text="MenuButton">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Action 1" />
+                  <MenuItem mnemonicParsing="false" text="Action 2" />
+               </items>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="20.0" top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </MenuButton>
+         </children>
+      </VBox>
+      <VBox layoutX="615.0" layoutY="291.0" prefHeight="200.0" prefWidth="260.0">
+         <children>
+            <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="137.0" text="Create New:" toggleGroup="$enemy">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </RadioButton>
+            <TextField fx:id="new_enemy_name" promptText="Name">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <CheckBox fx:id="punish" mnemonicParsing="false" prefHeight="18.0" prefWidth="91.0" text="Punish">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="20.0" top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="revard" mnemonicParsing="false" prefHeight="19.0" prefWidth="105.0" text="Revard">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="20.0" top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </CheckBox>
+         </children>
+      </VBox>
+      <Button layoutX="376.0" layoutY="246.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="153.0" text="START">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
