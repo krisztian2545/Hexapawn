@@ -1,9 +1,16 @@
 package model;
 
+import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+@Data
 public class Brain {
 
     private boolean wannaRevard;
@@ -12,10 +19,15 @@ public class Brain {
     private String lastState;
     private int lastMove;
 
+    static Logger logger;
+
     public Brain(boolean punish, boolean revard, Map<String, List<Integer>> moves) {
         wannaPunish = punish;
         wannaRevard = revard;
         possibleMoves = moves;
+
+        logger = LoggerFactory.getLogger(Brain.class);
+        MDC.put("userId", "my user id");
     }
 
     /**
@@ -30,6 +42,8 @@ public class Brain {
 
         if(moves != null) {
             move = randomMove(moves);
+            lastState = state;
+            lastMove = move;
         } else {
             moves = possibleMoves.get( mirrorState(state) );
 
@@ -37,10 +51,9 @@ public class Brain {
                 return -1;
 
             move = mirrorMove( randomMove(moves) );
+            lastState = state;
+            lastMove = mirrorMove(move);
         }
-
-        lastState = state;
-        lastMove = move;
 
         return move;
     }
@@ -64,7 +77,7 @@ public class Brain {
         int[] mirrored = new int[6];
 
         for(int i = 0; i < 6; i++) {
-            mirrored[i] = mirrorMove( Character.getNumericValue(state.charAt( mirrorMove(i+1)-1 )) );
+            mirrored[i] = mirrorPos( Character.getNumericValue(state.charAt( mirrorPos(i+1)-1 )) );
         }
 
         state = "";
@@ -74,26 +87,45 @@ public class Brain {
         return state;
     }
 
-     int mirrorMove(int move) {
+     int mirrorPos(int pos) {
 
-        if(move == 0)
+        if(pos == 0)
             return 0;
 
-        if((move % 3) == 0) {
-            move -= 2;
-        } else if((move % 3) == 1) {
-            move += 2;
+        if((pos % 3) == 0) {
+            pos -= 2;
+        } else if((pos % 3) == 1) {
+            pos += 2;
         }
 
-        return move;
+        return pos;
+    }
+
+    int mirrorMove(int move) {
+         /*move = mirrorPos(move);
+
+         if(move > 6) {
+             move -= 6;
+         } else if(move < 4) {
+             move += 6;
+         }*/
+
+         return 10 - move;
     }
 
     public void punish() {
-
+         //should remove revarded moves all at once?
+        List<Integer> modified = possibleMoves.get(lastState);
+        logger.debug("before modification: " + modified.toString());
+        modified.remove((Integer) lastMove);
+        possibleMoves.replace(lastState, modified);
     }
 
     public void revard() {
-
+        List<Integer> modified = possibleMoves.get(lastState);
+        // only add if it contains more than 1 type of move
+        modified.add(lastMove);
+        possibleMoves.replace(lastState, modified);
     }
 
 }
