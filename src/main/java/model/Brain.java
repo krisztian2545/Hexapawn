@@ -117,14 +117,21 @@ public class Brain {
          //should remove revarded moves all at once?
         List<Integer> modified = possibleMoves.get(lastState);
         logger.debug("before modification: " + modified.toString());
-        modified.remove((Integer) lastMove);
+
+        if(modified.size() > 1)
+            modified.remove((Integer) lastMove);
+
         possibleMoves.replace(lastState, modified);
     }
 
     public void revard() {
         List<Integer> modified = possibleMoves.get(lastState);
         // only add if it contains more than 1 type of move
-        modified.add(lastMove);
+        logger.debug("before modification: " + modified.toString());
+
+        if(modified.size() > 1)
+            modified.add(lastMove);
+
         possibleMoves.replace(lastState, modified);
     }
 

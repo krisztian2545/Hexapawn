@@ -4,10 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -91,6 +88,10 @@ class BrainTest {
         result = brain.mirrorState("143059");
         System.out.println(result);
         assertEquals("163750", result);
+
+        result = brain.mirrorState("520400");
+        System.out.println(result);
+        assertEquals("025006", result);
     }
 
     @Test
@@ -144,6 +145,19 @@ class BrainTest {
 
     @Test
     void revard() {
-
+        List<Integer> l = new ArrayList<Integer>() {{
+            add(3);
+            add(2);
+            add(3);
+        }};
+        int goodMove = 3;
+        brain.setLastState("123759");
+        brain.setLastMove(goodMove);
+        brain.revard();
+        List<Integer> revarded = brain.getPossibleMoves().get("123759");
+        Collections.sort(revarded);
+        Collections.sort(l);
+        System.out.println("revarded list: " + revarded);
+        assertEquals(l, revarded);
     }
 }
