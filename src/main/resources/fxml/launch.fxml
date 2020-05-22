@@ -2,17 +2,16 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LaunchController">
    <children>
@@ -45,23 +44,16 @@
                   <Font size="16.0" />
                </font>
             </RadioButton>
-            <MenuButton mnemonicParsing="false" text="MenuButton">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                  <MenuItem mnemonicParsing="false" text="Action 2" />
-               </items>
+            <ChoiceBox fx:id="enemy_list" prefWidth="150.0">
                <VBox.margin>
                   <Insets bottom="10.0" left="20.0" top="10.0" />
                </VBox.margin>
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </MenuButton>
+            </ChoiceBox>
          </children>
       </VBox>
       <VBox layoutX="615.0" layoutY="291.0" prefHeight="200.0" prefWidth="260.0">
          <children>
-            <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="137.0" text="Create New:" toggleGroup="$enemy">
+            <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="137.0" selected="true" text="Create New:" toggleGroup="$enemy">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
@@ -69,9 +61,17 @@
                   <Font size="16.0" />
                </font>
             </RadioButton>
+            <Label text="Bot name:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="10.0" />
+               </VBox.margin>
+            </Label>
             <TextField fx:id="new_enemy_name" promptText="Name">
                <VBox.margin>
-                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                  <Insets bottom="10.0" left="20.0" right="20.0" />
                </VBox.margin>
             </TextField>
             <CheckBox fx:id="punish" mnemonicParsing="false" prefHeight="18.0" prefWidth="91.0" text="Punish">
@@ -92,10 +92,17 @@
             </CheckBox>
          </children>
       </VBox>
-      <Button layoutX="376.0" layoutY="246.0" mnemonicParsing="false" prefHeight="90.0" prefWidth="153.0" text="START">
+      <Button layoutX="376.0" layoutY="246.0" mnemonicParsing="false" onAction="#startGame" prefHeight="90.0" prefWidth="153.0" text="START">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
+      <Label layoutX="104.0" layoutY="206.0" prefHeight="26.0" prefWidth="165.0" text="Username:" />
+      <Label fx:id="errorLabel" alignment="TOP_LEFT" layoutX="376.0" layoutY="354.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="153.0" textFill="RED">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ButtonBar layoutX="58.0" layoutY="353.0" prefHeight="40.0" prefWidth="200.0" />
    </children>
 </Pane>
