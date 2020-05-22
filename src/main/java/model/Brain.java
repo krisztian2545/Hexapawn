@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * The Brain class
+ */
 @Data
 public class Brain {
 
@@ -19,7 +22,7 @@ public class Brain {
     private String lastState;
     private int lastMove;
 
-    static Logger logger;
+    private static Logger logger;
 
     public Brain(boolean punish, boolean revard, Map<String, List<Integer>> moves) {
         wannaPunish = punish;
@@ -30,11 +33,30 @@ public class Brain {
         MDC.put("userId", "my user id");
     }
 
+    public int process(String state) {
+        int nextMove = chooseMove(state);
+
+        if(nextMove == 0) {
+            logger.debug("Improvising...");
+
+            learnState(state);
+            nextMove = chooseMove(state);
+        }
+
+        return nextMove;
+    }
+
+    public void learnState(String state) {
+        List<Integer> legalMoves = GameState.getPossibleBotMoves(state);
+        possibleMoves.put(state, legalMoves);
+
+        logger.debug("New state learned: {} => {}", state, legalMoves);
+    }
+
     /**
      *
      * @param state
-     * @return next move, represented by an integer
-     * @return -1 if the given state is unknown
+     * @return next move, represented by an integer; -1 if the given state is unknown
      */
     public int chooseMove(String state) {
         int move = 0;
@@ -48,7 +70,7 @@ public class Brain {
             moves = possibleMoves.get( mirrorState(state) );
 
             if(moves == null)
-                return -1;
+                return 0;
 
             move = mirrorMove( randomMove(moves) );
             lastState = state;
@@ -62,8 +84,7 @@ public class Brain {
      * chooses a random element from the list, which will represent the next move.
      *
      * @param moves - the list of possible moves (represented in integers) in a situation
-     * @return a random element (move) from the list
-     * @return 0 if the given list is empty
+     * @return a random element (move) from the list; 0 if the given list is empty
      */
      int randomMove(List<Integer> moves) {
         if(moves.size() == 0) // when the list is empty
@@ -114,25 +135,30 @@ public class Brain {
     }
 
     public void punish() {
-         //should remove revarded moves all at once?
-        List<Integer> modified = possibleMoves.get(lastState);
-        logger.debug("before modification: " + modified.toString());
+        //should remove revarded moves all at once?
+        if(wannaPunish){
+            List<Integer> modified = possibleMoves.get(lastState);
+            logger.debug("before modification: " + modified.toString());
 
-        if(modified.size() > 1)
-            modified.remove((Integer) lastMove);
+            if(modified.size() > 1)
+                modified.remove((Integer) lastMove);
 
-        possibleMoves.replace(lastState, modified);
+            possibleMoves.replace(lastState, modified);
+        }
+
     }
 
     public void revard() {
-        List<Integer> modified = possibleMoves.get(lastState);
-        // only add if it contains more than 1 type of move
-        logger.debug("before modification: " + modified.toString());
+         if(wannaRevard) {
+             List<Integer> modified = possibleMoves.get(lastState);
+             // only add if it contains more than 1 type of move
+             logger.debug("before modification: " + modified.toString());
 
-        if(modified.size() > 1)
-            modified.add(lastMove);
+             if(modified.size() > 1)
+                 modified.add(lastMove);
 
-        possibleMoves.replace(lastState, modified);
+             possibleMoves.replace(lastState, modified);
+         }
     }
 
 }

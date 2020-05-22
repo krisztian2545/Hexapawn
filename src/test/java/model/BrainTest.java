@@ -30,7 +30,7 @@ class BrainTest {
             add(6);
             add(8);
         }});
-        brain = new Brain(false, false, moves);
+        brain = new Brain(true, true, moves);
     }
 
     @AfterEach
@@ -159,5 +159,21 @@ class BrainTest {
         Collections.sort(l);
         System.out.println("revarded list: " + revarded);
         assertEquals(l, revarded);
+    }
+
+    @Test
+    void learnState() {
+        List<Integer> l = new ArrayList<Integer>() {{
+            add(2);
+            add(3);
+            add(4);
+            add(8);
+        }};
+        String newState = "523409";
+
+        assertTrue(!brain.getPossibleMoves().containsKey(newState));
+        brain.process(newState);
+        assertTrue(brain.getPossibleMoves().containsKey(newState));
+        assertEquals(l, brain.getPossibleMoves().get(newState));
     }
 }

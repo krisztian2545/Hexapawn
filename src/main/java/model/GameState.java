@@ -1,9 +1,24 @@
 package model;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class GameState {
+
+    private Player human;
+    private Bot enemy;
+    private int[] currentState;
+
+    private final int[] STARTING_STATE = new int[]{1, 2, 3, 7, 8, 9};
+
+    public GameState() {
+
+        currentState = STARTING_STATE;
+
+    }
 
     public static List<Integer> getPossibleBotMoves(String state) {
         List<Integer> legalMoves = new ArrayList<>();
@@ -33,7 +48,7 @@ public class GameState {
             if( state.contains(String.valueOf(newPos)) && (normalize(move) == 2) )
                 return false;
 
-            if( !state.contains(String.valueOf(newPos)) && (normalize(move) != 2) )
+            if( !state.substring(0, 2).contains(String.valueOf(newPos)) && (normalize(move) != 2) )
                 return false;
 
         } else {
@@ -52,7 +67,7 @@ public class GameState {
             if( state.contains(String.valueOf(newPos)) && (normalize(move) == 2) )
                 return false;
 
-            if( !state.contains(String.valueOf(newPos)) && (normalize(move) != 2) )
+            if( !state.substring(3).contains(String.valueOf(newPos)) && (normalize(move) != 2) )
                 return false;
 
         }
