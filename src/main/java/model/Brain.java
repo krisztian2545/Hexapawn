@@ -136,7 +136,7 @@ public class Brain {
 
     public void punish() {
         //should remove revarded moves all at once?
-        if(wannaPunish){
+        if(wannaPunish && !possibleMoves.isEmpty()){
             List<Integer> modified = possibleMoves.get(lastState);
             logger.debug("before modification: " + modified.toString());
 
@@ -149,7 +149,7 @@ public class Brain {
     }
 
     public void revard() {
-         if(wannaRevard) {
+         if(wannaRevard && !possibleMoves.isEmpty()) {
              List<Integer> modified = possibleMoves.get(lastState);
              // only add if it contains more than 1 type of move
              logger.debug("before modification: " + modified.toString());

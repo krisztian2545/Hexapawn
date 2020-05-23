@@ -16,7 +16,7 @@ public class Bot extends Player {
 
     //private Map<String, List<Integer>> defMoves = new HashMap<>();
     private Brain brain;
-    private final String importPath = "/brains/";
+    private final String importPath = "brains/";
 
     private static Logger logger;
 
@@ -27,6 +27,8 @@ public class Bot extends Player {
         MDC.put("userId", "my user id");
 
         loadBrain();
+
+        logger.debug("The loaded brains moves: {}", brain.getPossibleMoves());
     }
 
     public Bot(String name, boolean punish, boolean revard) {
@@ -57,16 +59,41 @@ public class Bot extends Player {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         try {
+            File f = new File(getFileName());
+            logger.info("Checking file ({}) if exsists...", f.getPath());
+            if(!f.exists()) {
+                f.createNewFile();
+                logger.info("Creating new file...");
+            }
+
             FileWriter writer = new FileWriter(getFileName());
+            logger.debug("Filewriter: ");
             gson.toJson(brain, writer);
+            writer.close();
+            logger.debug("brain: {}", gson.toJson(brain));
         } catch (IOException e) {
-            logger.error(e.getMessage());
+            logger.error("In exportBrain: {}", e.getMessage());
         }
     }
 
     private String getFileName() {
-        //String filePath = ;
-        return Bot.class.getResource( importPath + super.getName() + ".json" ).getPath();
+        String filePath = "";
+        //try {
+            filePath = /*Bot.class.getResource( importPath ).getPath() +*/ importPath + super.getName() + ".json";
+        /*} catch (NullPointerException e) {
+            logger.info("File doesn't exist...");
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+            try {
+                FileWriter writer = new FileWriter(getFileName());
+                gson.toJson(brain, writer);
+            } catch (IOException ex) {
+                logger.error(ex.getMessage());
+            }
+        }*/
+
+
+        return filePath;
     }
 
     public int getMove(String state) {
@@ -78,6 +105,8 @@ public class Bot extends Player {
             brain.revard();
         else
             brain.punish();
+
+        exportBrain();
     }
 
 }

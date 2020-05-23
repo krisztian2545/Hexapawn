@@ -11,13 +11,31 @@ public class GameState {
     private Player human;
     private Bot enemy;
     private int[] currentState;
+    private int round;
 
     private final int[] STARTING_STATE = new int[]{1, 2, 3, 7, 8, 9};
 
-    public GameState() {
+    public GameState(String username, String botname, boolean punish, boolean revard) {
 
+        human = new Player(username);
+        enemy = new Bot(botname, punish, revard);
+
+        initGame();
+
+    }
+
+    public GameState(String username, String botname) {
+
+        human = new Player(username);
+        enemy = new Bot(botname);
+
+        initGame();
+
+    }
+
+    public void initGame() {
+        round = 0;
         currentState = STARTING_STATE;
-
     }
 
     public static List<Integer> getPossibleBotMoves(String state) {
@@ -77,6 +95,19 @@ public class GameState {
 
     public static int normalize(int x) {
         return x + (((x-1) / 3) * -3);
+    }
+
+    public static String stateToString(int[] state) {
+        String newstate = "";
+        for(int i = 0; i < 6; i++)
+            newstate += String.valueOf(state[i]);
+
+        return newstate;
+    }
+
+    public void gameOver() {
+        enemy.getMove("123489");
+        enemy.feedback(false);
     }
 
 }
