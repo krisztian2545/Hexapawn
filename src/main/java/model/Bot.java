@@ -27,6 +27,7 @@ public class Bot extends Player {
         MDC.put("userId", "my user id");
 
         loadBrain();
+        brain.initLogger();
 
         logger.debug("The loaded brains moves: {}", brain.getPossibleMoves());
     }
@@ -38,6 +39,7 @@ public class Bot extends Player {
         MDC.put("userId", "my user id");
 
         brain = new Brain(punish, revard, new HashMap<String, List<Integer>>());
+        brain.initLogger();
     }
 
 

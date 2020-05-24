@@ -56,7 +56,7 @@ class GameStateTest {
                 assertFalse(GameState.isLegalMove(testSate, i));
         }
 
-        testSate = "143089";
+        testSate = "123789";
         l.clear();
         l.add(-2);
         l.add(-5);

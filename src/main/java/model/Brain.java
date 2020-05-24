@@ -29,6 +29,10 @@ public class Brain {
         wannaRevard = revard;
         possibleMoves = moves;
 
+        initLogger();
+    }
+
+    public void initLogger() {
         logger = LoggerFactory.getLogger(Brain.class);
         MDC.put("userId", "my user id");
     }
@@ -136,6 +140,7 @@ public class Brain {
 
     public void punish() {
         //should remove revarded moves all at once?
+        //logger.debug("Before punisment:\nLast state: {}\nLast move\nMoves: {}", lastState, lastMove, possibleMoves);
         if(wannaPunish && !possibleMoves.isEmpty()){
             List<Integer> modified = possibleMoves.get(lastState);
             logger.debug("before modification: " + modified.toString());

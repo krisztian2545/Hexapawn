@@ -91,7 +91,8 @@ public class LaunchController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
-        //log.info("Username is set to {}, loading game scene.", usernameTextfield.getText());
+        fxmlLoader.<GameController>getController().initGame();
+
     }
 
     private ObservableList getEnemyNames() {

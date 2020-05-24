@@ -80,30 +80,30 @@ public class GameState {
 
         if(move < 0) {
             move *= -1;
-            logger.debug("move = {}", move);
+            //logger.debug("move = {}", move);
 
             int c = ((move-1) / 3);
             int pos = Character.getNumericValue(state.charAt(3+c));
-            logger.debug("c = {}", c);
-            logger.debug("pos = {}", pos);
+            //logger.debug("c = {}", c);
+            //logger.debug("pos = {}", pos);
             if(pos == 0)
                 return false;
 
             int x = (4 - normalize(pos)) + /*(4 - */normalize(move)/*)*/+1;
             int newPos = pos - (normalize(move)+1);
 
-            logger.debug("x = {}", x);
-            logger.debug("newPos = {}", newPos);
+            //logger.debug("x = {}", x);
+            //logger.debug("newPos = {}", newPos);
 
-            logger.debug("(x < 4) || (x > 6) = {}", (x < 4) || (x > 6));
+            //logger.debug("(x < 4) || (x > 6) = {}", (x < 4) || (x > 6));
             if((x < 4) || (x > 6))
                 return false;
 
-            logger.debug("state.contains(String.valueOf(newPos)) && (normalize(move) == 2) = {}", state.contains(String.valueOf(newPos)) && (normalize(move) == 2));
+            //logger.debug("state.contains(String.valueOf(newPos)) && (normalize(move) == 2) = {}", state.contains(String.valueOf(newPos)) && (normalize(move) == 2));
             if( state.contains(String.valueOf(newPos)) && (normalize(move) == 2) )
                 return false;
 
-            logger.debug("!state.substring(0, 3).contains(String.valueOf(newPos)) && (normalize(move) != 2) = {}", !state.substring(0, 3).contains(String.valueOf(newPos)) && (normalize(move) != 2));
+            //logger.debug("!state.substring(0, 3).contains(String.valueOf(newPos)) && (normalize(move) != 2) = {}", !state.substring(0, 3).contains(String.valueOf(newPos)) && (normalize(move) != 2));
             if( !state.substring(0, 3).contains(String.valueOf(newPos)) && (normalize(move) != 2) )
                 return false;
 
@@ -159,8 +159,15 @@ public class GameState {
     }
 
     public void movePlayer(int move) {
+        move *= -1;
+        int pieceIndex = (move-1) / 3;
+        currentState[3+pieceIndex] -= normalize(move)+1;
 
-
+        for(int i = 0; i < 3; i++) {
+            if(currentState[i] == currentState[3+pieceIndex]) {
+                currentState[i] = 0;
+            }
+        }
 
         checkGameOver();
     }
@@ -170,44 +177,52 @@ public class GameState {
         if(round % 2 == 1) {
             // no more enemy
             if(stateToString(currentState).substring(0, 3).equals("000") ) {
+                logger.debug("No more enemy...");
                 gameOver = true;
-                winner = "Player";
+                winner = human.getName();
                 return;
             }
 
             // the enemy can't move
             if(getPossibleBotMoves(stateToString(currentState)).size() == 0) {
+                logger.debug("The enemy can't move...");
                 gameOver = true;
-                winner = "Player";
+                winner = human.getName();
                 return;
             }
 
             // reached the end of table
-            if((currentState[3] < 4) || (currentState[4] < 4) || (currentState[5] < 4)) {
-                gameOver = true;
-                winner = "Player";
-                return;
+            for(int i = 3; i < 6; i++) {
+                if((currentState[i] < 4) && (currentState[i] > 0)) {
+                    logger.debug("Reached the end of table...");
+                    gameOver = true;
+                    winner = human.getName();
+                    return;
+                }
             }
 
         } else {
             // no more player pieces
             if(stateToString(currentState).substring(3).equals("000") ) {
+                logger.debug("No more player pieces...");
                 gameOver = true;
-                winner = "Enemy";
+                winner = enemy.getName();
                 return;
             }
 
             // the player can't move
             if(getPossiblePlayerMoves(stateToString(currentState)).size() == 0) {
+                logger.debug("The player can't move...");
                 gameOver = true;
-                winner = "Enemy";
+                winner = enemy.getName();
                 return;
             }
 
             // reached the end of table
             if((currentState[0] > 6) || (currentState[1] > 6) || (currentState[2] > 6)) {
+                logger.debug("Reached the end of table...");
                 gameOver = true;
-                winner = "Enemy";
+                winner = enemy.getName();
                 return;
             }
         }
@@ -224,7 +239,7 @@ public class GameState {
     }
 
     public void gameOver() {
-        enemy.feedback(winner.equals("Enemy"));
+        enemy.feedback(winner.equals(enemy.getName()));
     }
 
 }

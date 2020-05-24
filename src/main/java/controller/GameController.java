@@ -37,7 +37,7 @@ public class GameController {
         logger.info("Initializing data...");
         gameState = new GameState(username, botname, punish, revard);
 
-        initGame();
+        //initGame();
         //gameState.gameOver();
 
 
@@ -47,7 +47,7 @@ public class GameController {
         logger.info("Initializing data...");
         gameState = new GameState(username, botname);
 
-        initGame();
+        //initGame();
     }
 
     public void initialize() {
@@ -57,7 +57,8 @@ public class GameController {
         logger.info("GameController initialize...");
         images = List.of(
                 new Image(getClass().getResource("/images/yellow.png").toExternalForm()),
-                new Image(getClass().getResource("/images/blue.png").toExternalForm())
+                new Image(getClass().getResource("/images/blue.png").toExternalForm()),
+                new Image(getClass().getResource("/images/blank.png").toExternalForm())
         );
     }
 
@@ -68,6 +69,7 @@ public class GameController {
     }
 
     public void updateState() {
+        logger.info("Round number {}", gameState.getRound());
         if(gameState.getRound() % 2 == 1) {
             logger.info("Your turn!");
             turnLabel.setText("Your turn!");
@@ -93,19 +95,24 @@ public class GameController {
         logger.debug("Grid is pressed in: ({}, {})", row, col);
 
         if(canInteract) {
-            if(GameState.stateToString(gameState.getCurrentState()).substring(3).contains(String.valueOf(row*3 + col+1)) ) {
-                logger.debug("Clicked empty part or enemy piece.");
-                return;
-            }
 
             if(moveFrom == 0) {
+                if(!GameState.stateToString(gameState.getCurrentState()).substring(3).contains(String.valueOf(row*3 + col+1)) ) {
+                    logger.debug("Clicked empty part or enemy piece.");
+                    return;
+                }
+
                 moveFrom = row*3 + col+1;
+                logger.debug("Move from: {}", moveFrom);
             } else {
                 int moveTo = row*3 + col+1;
-                int move = moveTo - moveFrom +1; // + piece index
+                int normMove = moveTo - moveFrom +1;
+                int selectedPiece = GameState.stateToString(gameState.getCurrentState()).substring(3).indexOf(String.valueOf(moveFrom));
+                int move = normMove - (selectedPiece * 3);
+                logger.debug("Move to: {}", moveTo);
                 logger.debug("move = {}", move);
 
-                if( (move > -1) || (move < -9) ) {
+                if( (normMove > -1) || (normMove < -3) ) {
                     logger.info("Illegal move!");
                     moveFrom = 0;
                     return;
@@ -126,9 +133,17 @@ public class GameController {
     }
 
     public void drawState(int[] state) {
+        for(int i = 0; i < 9; i++) {
+            ImageView view = (ImageView) gameGrid.getChildren().get(i);
+            view.setImage(images.get(2));
+        }
+
         for(int i = 0; i < 6; i++) {
             if(state[i] != 0) {
-                ImageView view = (ImageView) gameGrid.getChildren().get(state[i]);
+                ImageView view = (ImageView) gameGrid.getChildren().get(state[i]-1);
+//                if (view.getImage() != null) {
+//                    logger.debug("Image({}) = {}", i, view.getImage().getUrl());
+//                }
                 if(i < 3)
                     view.setImage(images.get(1)); // blue
                 else
@@ -139,7 +154,9 @@ public class GameController {
 
     public void checkGameOver() {
         if(gameState.isGameOver()) {
-            logger.info("GAME OVER!");
+            logger.info("GAME OVER!\nThe winner is: {}", gameState.getWinner());
+            turnLabel.setText("The winner is: " + gameState.getWinner());
+            canInteract = false;
             // wait for new game button
             // init new game
         } else {
