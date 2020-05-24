@@ -22,15 +22,15 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <ImageView fitHeight="170.0" fitWidth="170.0" onMouseClicked="#cubeClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <ImageView fitHeight="170.0" fitWidth="170.0" onMouseClicked="#cubeClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-            <ImageView fitHeight="170.0" fitWidth="170.0" onMouseClicked="#cubeClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-            <ImageView fitHeight="170.0" fitWidth="170.0" onMouseClicked="#cubeClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <ImageView fitHeight="170.0" fitWidth="170.0" onMouseClicked="#cubeClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ImageView fitHeight="170.0" fitWidth="170.0" onMouseClicked="#cubeClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <ImageView fitHeight="170.0" fitWidth="170.0" onMouseClicked="#cubeClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <ImageView fitHeight="170.0" fitWidth="170.0" onMouseClicked="#cubeClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <ImageView fitHeight="170.0" fitWidth="170.0" onMouseClicked="#cubeClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <ImageView fitHeight="170.0" fitWidth="170.0" onMouseClicked="#onGridClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <ImageView fitHeight="170.0" fitWidth="170.0" onMouseClicked="#onGridClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <ImageView fitHeight="170.0" fitWidth="170.0" onMouseClicked="#onGridClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+            <ImageView fitHeight="170.0" fitWidth="170.0" onMouseClicked="#onGridClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <ImageView fitHeight="170.0" fitWidth="170.0" onMouseClicked="#onGridClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ImageView fitHeight="170.0" fitWidth="170.0" onMouseClicked="#onGridClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <ImageView fitHeight="170.0" fitWidth="170.0" onMouseClicked="#onGridClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <ImageView fitHeight="170.0" fitWidth="170.0" onMouseClicked="#onGridClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ImageView fitHeight="170.0" fitWidth="170.0" onMouseClicked="#onGridClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <Label fx:id="turnLabel" alignment="CENTER" layoutX="378.0" layoutY="14.0" prefHeight="35.0" prefWidth="245.0" textAlignment="CENTER">

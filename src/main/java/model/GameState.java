@@ -13,6 +13,7 @@ public class GameState {
     private int[] currentState;
     private int round;
     private boolean gameOver;
+    private String winner;
 
     private final int[] STARTING_STATE = new int[]{1, 2, 3, 7, 8, 9};
 
@@ -36,8 +37,19 @@ public class GameState {
 
     public void initGame() {
         gameOver = false;
+        winner = "";
         round = 1;
         currentState = STARTING_STATE;
+    }
+
+    public static List<Integer> getPossiblePlayerMoves(String state) {
+        List<Integer> legalMoves = new ArrayList<>();
+        for(int i = -1; i > -10; i++) {
+            if(isLegalMove(state, i))
+                legalMoves.add(i);
+        }
+
+        return legalMoves;
     }
 
     public static List<Integer> getPossibleBotMoves(String state) {
@@ -68,7 +80,7 @@ public class GameState {
             if( state.contains(String.valueOf(newPos)) && (normalize(move) == 2) )
                 return false;
 
-            if( !state.substring(0, 2).contains(String.valueOf(newPos)) && (normalize(move) != 2) )
+            if( !state.substring(0, 3).contains(String.valueOf(newPos)) && (normalize(move) != 2) )
                 return false;
 
         } else {
@@ -108,16 +120,87 @@ public class GameState {
     }
 
     public void moveEnemy() {
+        int move = enemy.getMove(stateToString(currentState));
 
+        int pieceIndex = (move-1) / 3;
+        currentState[pieceIndex] += normalize(move)+1;
+
+        for(int i = 3; i < 6; i++) {
+            if(currentState[i] == currentState[pieceIndex]) {
+                currentState[i] = 0;
+            }
+        }
+
+        checkGameOver();
     }
 
     public void movePlayer(int move) {
 
+
+
+        checkGameOver();
+    }
+
+    public void checkGameState() {
+
+        if(round % 2 == 1) {
+            // no more enemy
+            if(stateToString(currentState).substring(0, 3).equals("000") ) {
+                gameOver = true;
+                winner = "Player";
+                return;
+            }
+
+            // the enemy can't move
+            if(getPossibleBotMoves(stateToString(currentState)).size() == 0) {
+                gameOver = true;
+                winner = "Player";
+                return;
+            }
+
+            // reached the end of table
+            if((currentState[3] < 4) || (currentState[4] < 4) || (currentState[5] < 4)) {
+                gameOver = true;
+                winner = "Player";
+                return;
+            }
+
+        } else {
+            // no more player pieces
+            if(stateToString(currentState).substring(3).equals("000") ) {
+                gameOver = true;
+                winner = "Enemy";
+                return;
+            }
+
+            // the player can't move
+            if(getPossiblePlayerMoves(stateToString(currentState)).size() == 0) {
+                gameOver = true;
+                winner = "Enemy";
+                return;
+            }
+
+            // reached the end of table
+            if((currentState[0] > 6) || (currentState[1] > 6) || (currentState[2] > 6)) {
+                gameOver = true;
+                winner = "Enemy";
+                return;
+            }
+        }
+
+    }
+
+    public void checkGameOver() {
+        checkGameState();
+        if(gameOver) {
+            gameOver();
+        } else {
+            round++;
+        }
     }
 
     public void gameOver() {
-        //enemy.getMove("123489");
-        enemy.feedback(false);
+        enemy.feedback(winner.equals("Enemy"));
     }
 
 }

@@ -2,9 +2,11 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import model.Bot;
 import model.Brain;
@@ -23,6 +25,7 @@ public class GameController {
     private List<Image> images;
     static Logger logger;
     private boolean canInteract;
+    private int moveFrom;
 
     @FXML
     private Label turnLabel;
@@ -68,6 +71,8 @@ public class GameController {
         if(gameState.getRound() % 2 == 1) {
             logger.info("Your turn!");
             turnLabel.setText("Your turn!");
+            moveFrom = 0;
+            //moveTo = 0;
             canInteract = true;
 
         } else {
@@ -79,6 +84,33 @@ public class GameController {
             drawState(gameState.getCurrentState());
             checkGameOver();
 
+        }
+    }
+
+    public void onGridClick(MouseEvent mouseEvent) {
+        int row = GridPane.getRowIndex((Node) mouseEvent.getSource());
+        int col = GridPane.getColumnIndex((Node) mouseEvent.getSource());
+        logger.debug("Grid is pressed in: ({}, {})", row, col);
+
+        if(canInteract) {
+            if(GameState.stateToString(gameState.getCurrentState()).contains(String.valueOf(row*3 + col+1)) ) {
+                logger.debug("Clicked empty part.");
+                return;
+            }
+
+            if(moveFrom == 0) {
+                moveFrom = row*3 + col+1;
+            } else {
+                int moveTo = row*3 + col+1;
+                int move = moveTo - moveFrom -1;
+                logger.debug("move = {}", move);
+
+                // is legal move?
+
+                gameState.movePlayer(move);
+                drawState(gameState.getCurrentState());
+                checkGameOver();
+            }
         }
     }
 
@@ -97,7 +129,8 @@ public class GameController {
     public void checkGameOver() {
         if(gameState.isGameOver()) {
             logger.info("GAME OVER!");
-            // new game button
+            // wait for new game button
+            // init new game
         } else {
             updateState();
         }
