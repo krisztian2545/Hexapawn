@@ -12,6 +12,7 @@ public class GameState {
     private Bot enemy;
     private int[] currentState;
     private int round;
+    private boolean gameOver;
 
     private final int[] STARTING_STATE = new int[]{1, 2, 3, 7, 8, 9};
 
@@ -20,7 +21,7 @@ public class GameState {
         human = new Player(username);
         enemy = new Bot(botname, punish, revard);
 
-        initGame();
+        //initGame();
 
     }
 
@@ -29,12 +30,13 @@ public class GameState {
         human = new Player(username);
         enemy = new Bot(botname);
 
-        initGame();
+        //initGame();
 
     }
 
     public void initGame() {
-        round = 0;
+        gameOver = false;
+        round = 1;
         currentState = STARTING_STATE;
     }
 
@@ -105,8 +107,16 @@ public class GameState {
         return newstate;
     }
 
+    public void moveEnemy() {
+
+    }
+
+    public void movePlayer(int move) {
+
+    }
+
     public void gameOver() {
-        enemy.getMove("123489");
+        //enemy.getMove("123489");
         enemy.feedback(false);
     }
 
