@@ -51,7 +51,7 @@ public class GameController {
     }
 
     public void initialize() {
-        logger = LoggerFactory.getLogger(Brain.class);
+        logger = LoggerFactory.getLogger(GameController.class);
         MDC.put("userId", "my user id");
 
         logger.info("GameController initialize...");
@@ -93,8 +93,8 @@ public class GameController {
         logger.debug("Grid is pressed in: ({}, {})", row, col);
 
         if(canInteract) {
-            if(GameState.stateToString(gameState.getCurrentState()).contains(String.valueOf(row*3 + col+1)) ) {
-                logger.debug("Clicked empty part.");
+            if(GameState.stateToString(gameState.getCurrentState()).substring(3).contains(String.valueOf(row*3 + col+1)) ) {
+                logger.debug("Clicked empty part or enemy piece.");
                 return;
             }
 
@@ -102,14 +102,25 @@ public class GameController {
                 moveFrom = row*3 + col+1;
             } else {
                 int moveTo = row*3 + col+1;
-                int move = moveTo - moveFrom -1;
+                int move = moveTo - moveFrom +1; // + piece index
                 logger.debug("move = {}", move);
 
-                // is legal move?
+                if( (move > -1) || (move < -9) ) {
+                    logger.info("Illegal move!");
+                    moveFrom = 0;
+                    return;
+                }
 
-                gameState.movePlayer(move);
-                drawState(gameState.getCurrentState());
-                checkGameOver();
+                // is legal move?
+                if(GameState.isLegalMove( GameState.stateToString(gameState.getCurrentState()), move )) {
+                    gameState.movePlayer(move);
+                    drawState(gameState.getCurrentState());
+                    checkGameOver();
+                } else {
+                    logger.info("Illegal move!");
+                    moveFrom = 0;
+                }
+
             }
         }
     }

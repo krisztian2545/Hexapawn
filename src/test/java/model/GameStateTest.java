@@ -41,6 +41,37 @@ class GameStateTest {
 
     @Test
     void isLegalMove() {
+        String testSate = "523409";
+        List<Integer> l = new ArrayList<Integer>() {{
+            add(2);
+            add(3);
+            add(4);
+            add(8);
+        }};
+
+        for(int i = 1; i < 10; i++) {
+            if(l.contains(i))
+                assertTrue(GameState.isLegalMove(testSate, i));
+            else
+                assertFalse(GameState.isLegalMove(testSate, i));
+        }
+
+        testSate = "143089";
+        l.clear();
+        l.add(-2);
+        l.add(-5);
+        l.add(-8);
+
+        for(int i = -1; i > -10; i--) {
+            System.out.println("i = " + i);
+            if(l.contains(i)) {
+                System.out.println("assertTrue");
+                assertTrue(GameState.isLegalMove(testSate, i));
+            } else {
+                System.out.println("assertFalse");
+                assertFalse(GameState.isLegalMove(testSate, i));
+            }
+        }
 
     }
 }

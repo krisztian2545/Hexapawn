@@ -50,7 +50,7 @@ public class LaunchController {
     @FXML
     public void initialize() {
 
-        logger = LoggerFactory.getLogger(Brain.class);
+        logger = LoggerFactory.getLogger(LaunchController.class);
         MDC.put("userId", "my user id");
 
         enemy_list.setItems(getEnemyNames());
