@@ -70,7 +70,8 @@ public class GameController {
         images = List.of(
                 new Image(getClass().getResource("/images/yellow.png").toExternalForm()),
                 new Image(getClass().getResource("/images/blue.png").toExternalForm()),
-                new Image(getClass().getResource("/images/blank.png").toExternalForm())
+                new Image(getClass().getResource("/images/blank.png").toExternalForm()),
+                new Image(getClass().getResource("/images/yellow_selected.png").toExternalForm())
         );
     }
 
@@ -79,6 +80,7 @@ public class GameController {
         gameState.initGame();
         updateWins();
         logger.debug("Starting with state: {}", GameState.stateToString(gameState.getCurrentState()) );
+        moveFrom = 0;
         drawState(gameState.getCurrentState());
         updateState();
     }
@@ -130,6 +132,7 @@ public class GameController {
                 if( (normMove > -1) || (normMove < -3) ) {
                     logger.info("Illegal move!");
                     moveFrom = 0;
+                    drawState(gameState.getCurrentState());
                     return;
                 }
 
@@ -144,6 +147,7 @@ public class GameController {
                 }
 
             }
+            drawState(gameState.getCurrentState());
         }
     }
 
@@ -155,10 +159,16 @@ public class GameController {
 
         for(int i = 0; i < 6; i++) {
             if(state[i] != 0) {
+                logger.debug("state[i]: {} {}", state[i], state[i] == moveFrom);
                 ImageView view = (ImageView) gameGrid.getChildren().get(state[i]-1);
 //                if (view.getImage() != null) {
 //                    logger.debug("Image({}) = {}", i, view.getImage().getUrl());
 //                }
+                if(state[i] == moveFrom) {
+                    view.setImage(images.get(3));
+                    continue;
+                }
+
                 if(i < 3)
                     view.setImage(images.get(1)); // blue
                 else
