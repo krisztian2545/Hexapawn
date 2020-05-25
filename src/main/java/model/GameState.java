@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * The GameState class
  */
 @Data
 public class GameState {
@@ -35,8 +35,6 @@ public class GameState {
         human = new Player(username);
         enemy = new Bot(botname, punish, revard);
 
-        //initGame();
-
     }
 
     public GameState(String username, String botname) {
@@ -45,8 +43,6 @@ public class GameState {
 
         human = new Player(username);
         enemy = new Bot(botname);
-
-        //initGame();
 
     }
 
@@ -86,30 +82,22 @@ public class GameState {
 
         if(move < 0) {
             move *= -1;
-            //logger.debug("move = {}", move);
 
             int c = ((move-1) / 3);
             int pos = Character.getNumericValue(state.charAt(3+c));
-            //logger.debug("c = {}", c);
-            //logger.debug("pos = {}", pos);
+
             if(pos == 0)
                 return false;
 
             int x = (4 - normalize(pos)) + /*(4 - */normalize(move)/*)*/+1;
             int newPos = pos - (normalize(move)+1);
 
-            //logger.debug("x = {}", x);
-            //logger.debug("newPos = {}", newPos);
-
-            //logger.debug("(x < 4) || (x > 6) = {}", (x < 4) || (x > 6));
             if((x < 4) || (x > 6))
                 return false;
 
-            //logger.debug("state.contains(String.valueOf(newPos)) && (normalize(move) == 2) = {}", state.contains(String.valueOf(newPos)) && (normalize(move) == 2));
             if( state.contains(String.valueOf(newPos)) && (normalize(move) == 2) )
                 return false;
 
-            //logger.debug("!state.substring(0, 3).contains(String.valueOf(newPos)) && (normalize(move) != 2) = {}", !state.substring(0, 3).contains(String.valueOf(newPos)) && (normalize(move) != 2));
             if( !state.substring(0, 3).contains(String.valueOf(newPos)) && (normalize(move) != 2) )
                 return false;
 

@@ -127,8 +127,7 @@ public class GameStateTest {
 
     @Test
     void moveEnemy() {
-        /*gameState.movePlayer(-2); // the player moves first always
-        gameState.moveEnemy();*/
+
     }
 
     @Test

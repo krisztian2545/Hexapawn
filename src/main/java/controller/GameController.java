@@ -6,17 +6,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import model.Bot;
-import model.Brain;
 import model.GameState;
-import model.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -48,18 +44,11 @@ public class GameController {
     public void initData(String username, String botname, boolean punish, boolean revard) {
         logger.info("Initializing data...");
         gameState = new GameState(username, botname, punish, revard);
-
-        //initGame();
-        //gameState.gameOver();
-
-
     }
 
     public void initData(String username, String botname) {
         logger.info("Initializing data...");
         gameState = new GameState(username, botname);
-
-        //initGame();
     }
 
     public void initialize() {
@@ -91,7 +80,6 @@ public class GameController {
             logger.info("Your turn!");
             turnLabel.setText("Your turn!");
             moveFrom = 0;
-            //moveTo = 0;
             canInteract = true;
 
         } else {
@@ -160,9 +148,7 @@ public class GameController {
             if(state[i] != 0) {
                 logger.debug("state[i]: {} {}", state[i], state[i] == moveFrom);
                 ImageView view = (ImageView) gameGrid.getChildren().get(state[i]-1);
-//                if (view.getImage() != null) {
-//                    logger.debug("Image({}) = {}", i, view.getImage().getUrl());
-//                }
+
                 if(state[i] == moveFrom) {
                     view.setImage(images.get(3));
                     continue;
@@ -182,8 +168,6 @@ public class GameController {
             turnLabel.setText("The winner is: " + gameState.getWinner());
             canInteract = false;
             updateWins();
-            // wait for new game button
-            // init new game
         } else {
             updateState();
         }

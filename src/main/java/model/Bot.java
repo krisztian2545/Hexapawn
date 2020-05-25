@@ -94,20 +94,7 @@ public class Bot extends Player {
 
     private String getFileName() {
         String filePath = "";
-        //try {
-            filePath = /*Bot.class.getResource( importPath ).getPath() +*/ importPath + super.getName() + ".json";
-        /*} catch (NullPointerException e) {
-            logger.info("File doesn't exist...");
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-            try {
-                FileWriter writer = new FileWriter(getFileName());
-                gson.toJson(brain, writer);
-            } catch (IOException ex) {
-                logger.error(ex.getMessage());
-            }
-        }*/
-
+        filePath =  importPath + super.getName() + ".json";
 
         return filePath;
     }

@@ -45,9 +45,9 @@ public class Brain {
 
     /**
      * initializes the object with the given parameters
-     * @param punish - set to {@code true} if you want to avoid the same mistakes again and again
-     * @param revard - set to {@code true} if you want increase the chance of a move that led to victory
-     * @param moves - the {@code Map<String, List<Integer>>} that contains the possible moves for the states
+     * @param punish set to {@code true} if you want to avoid the same mistakes again and again
+     * @param revard set to {@code true} if you want increase the chance of a move that led to victory
+     * @param moves the {@code Map<String, List<Integer>>} that contains the possible moves for the states
      */
     public Brain(boolean punish, boolean revard, Map<String, List<Integer>> moves) {
         wannaPunish = punish;
@@ -67,7 +67,7 @@ public class Brain {
 
     /**
      * asks for a possible move for the given state. When encountering a new state, calls the {@link model.Brain#learnState(String)} method and then chooses a move.
-     * @param state - the state to process
+     * @param state the state to process
      * @return the choosen move
      */
     public int process(String state) {
@@ -85,7 +85,7 @@ public class Brain {
 
     /**
      * learns the given state by putting all the currently possible moves to the {@link model.Brain#possibleMoves} where the key is the given {@code state}
-     * @param state - a new state
+     * @param state a new state
      */
     public void learnState(String state) {
         List<Integer> legalMoves = GameState.getPossibleBotMoves(state);
@@ -96,7 +96,7 @@ public class Brain {
 
     /**
      * gives a move for the given state.
-     * @param state - the state to choose a move for
+     * @param state the state to choose a move for
      * @return next move, represented by an integer, {@code 0} if the given state is unknown
      */
     public int chooseMove(String state) {
@@ -115,7 +115,7 @@ public class Brain {
     /**
      * chooses a random element from the list, which will represent the next move.
      *
-     * @param moves - the list of possible moves (represented in integers) in a situation
+     * @param moves the list of possible moves (represented in integers) in a situation
      * @return a random element (move) from the list; 0 if the given list is empty
      */
      int randomMove(List<Integer> moves) {
