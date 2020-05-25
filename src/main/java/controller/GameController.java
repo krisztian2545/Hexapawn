@@ -2,12 +2,17 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import model.Bot;
 import model.Brain;
 import model.GameState;
@@ -16,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -63,7 +69,9 @@ public class GameController {
     }
 
     public void initGame() {
+        logger.info("Initializing new game...");
         gameState.initGame();
+        logger.debug("Starting with state: {}", GameState.stateToString(gameState.getCurrentState()) );
         drawState(gameState.getCurrentState());
         updateState();
     }
@@ -162,6 +170,21 @@ public class GameController {
         } else {
             updateState();
         }
+    }
+
+    public void goBack(ActionEvent event) throws IOException {
+        gameState.getEnemy().exportBrain();
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/launch.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    public void restart(ActionEvent event) {
+        logger.info("New game button pressed.");
+        initGame();
     }
 
 }

@@ -78,15 +78,11 @@ public class LaunchController {
             logger.info("Choosen option: create new enemy...");
 
             fxmlLoader.<GameController>getController().initData(player_name.getText(), new_enemy_name.getText(), punish.isSelected(), revard.isSelected());
-            addFileName(new_enemy_name.getText());
         } else {
 
             logger.info("Choosen option: use existing enemy...");
             fxmlLoader.<GameController>getController().initData(player_name.getText(), (String )enemy_list.getValue());
         }
-
-
-        //if(enemy.)
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
@@ -133,10 +129,6 @@ public class LaunchController {
         }*/
 
         return out;
-    }
-
-    private void addFileName(String name) {
-
     }
 
 }

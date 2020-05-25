@@ -71,7 +71,7 @@ public class Bot extends Player {
         }
     }
 
-    private void exportBrain() {
+    public void exportBrain() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         try {
@@ -117,6 +117,7 @@ public class Bot extends Player {
     }
 
     public void feedback(boolean won) {
+        brain.initLogger();
         if(won)
             brain.revard();
         else

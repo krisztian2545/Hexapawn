@@ -8,6 +8,9 @@ import org.slf4j.MDC;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 @Data
 public class GameState {
 
@@ -19,7 +22,6 @@ public class GameState {
     private String winner;
 
     static Logger logger = LoggerFactory.getLogger(GameState.class);
-        //MDC.put("userId", "my user id");
 
     private final int[] STARTING_STATE = new int[]{1, 2, 3, 7, 8, 9};
 
@@ -49,7 +51,8 @@ public class GameState {
         gameOver = false;
         winner = "";
         round = 1;
-        currentState = STARTING_STATE;
+        currentState = STARTING_STATE.clone();
+        logger.debug(stateToString(STARTING_STATE));
     }
 
     public static List<Integer> getPossiblePlayerMoves(String state) {

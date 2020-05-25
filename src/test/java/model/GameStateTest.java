@@ -12,9 +12,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GameStateTest {
 
+    GameState gameState;
+
     @BeforeEach
     void setUp() {
-
+        gameState = new GameState("username", "testbot", true, true);
+        gameState.initGame();
     }
 
     @AfterEach
@@ -73,5 +76,76 @@ public class GameStateTest {
             }
         }
 
+        assertFalse(GameState.isLegalMove(testSate, 0));
+
+    }
+
+    @Test
+    void initGame() {
+        GameState testGameState = new GameState("username", "testbot", true, true);
+        testGameState.initGame();
+
+        assertFalse(testGameState.isGameOver());
+        assertEquals("", testGameState.getWinner());
+        assertEquals(1, testGameState.getRound());
+        for(int i = 0; i < 6; i++)
+            assertEquals(testGameState.getSTARTING_STATE()[i], testGameState.getCurrentState()[i]);
+    }
+
+    @Test
+    void getPossiblePlayerMoves() {
+        List<Integer> l = new ArrayList<Integer>() {{
+            add(-2);
+            add(-5);
+            add(-8);
+        }};
+        List<Integer> possibleMoves = GameState.getPossiblePlayerMoves("123789");
+
+        Collections.sort(l);
+        Collections.sort(possibleMoves);
+
+        System.out.println("expected list: " + l);
+        System.out.println("calculated list: " + possibleMoves);
+
+        assertEquals(l, possibleMoves);
+    }
+
+    @Test
+    void normalize() {
+        for(int i = 1; i < 10; i++) {
+            assertEquals(((i-1) % 3)+1, GameState.normalize(i));
+        }
+    }
+
+    @Test
+    void stateToString() {
+        String testState = "123789";
+        int[] ar = new int[]{1, 2, 3, 7, 8, 9};
+
+        assertEquals(testState, GameState.stateToString(ar));
+    }
+
+    @Test
+    void moveEnemy() {
+        /*gameState.movePlayer(-2); // the player moves first always
+        gameState.moveEnemy();*/
+    }
+
+    @Test
+    void movePlayer() {
+
+    }
+
+    @Test
+    void checkGameState() {
+
+    }
+
+    @Test
+    void checkGameOver() {
+    }
+
+    @Test
+    void gameOver() {
     }
 }

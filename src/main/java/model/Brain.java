@@ -66,11 +66,14 @@ public class Brain {
         int move = 0;
         List<Integer> moves = possibleMoves.get(state);
 
-        if(moves != null) {
+        if(moves == null)
+            return 0;
+
+        //if(moves != null) {
             move = randomMove(moves);
             lastState = state;
             lastMove = move;
-        } else {
+        /*} else {
             moves = possibleMoves.get( mirrorState(state) );
 
             if(moves == null)
@@ -79,7 +82,7 @@ public class Brain {
             move = mirrorMove( randomMove(moves) );
             lastState = state;
             lastMove = mirrorMove(move);
-        }
+        }*/
 
         return move;
     }
@@ -157,7 +160,7 @@ public class Brain {
          if(wannaRevard && !possibleMoves.isEmpty()) {
              List<Integer> modified = possibleMoves.get(lastState);
              // only add if it contains more than 1 type of move
-             logger.debug("before modification: " + modified.toString());
+             logger.debug("before modification: {}", modified.toString());
 
              if(modified.size() > 1)
                  modified.add(lastMove);
