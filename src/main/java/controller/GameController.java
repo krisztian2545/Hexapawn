@@ -37,6 +37,12 @@ public class GameController {
     private Label turnLabel;
 
     @FXML
+    private Label playerName;
+
+    @FXML
+    private Label botName;
+
+    @FXML
     private GridPane gameGrid;
 
     public void initData(String username, String botname, boolean punish, boolean revard) {
@@ -71,6 +77,7 @@ public class GameController {
     public void initGame() {
         logger.info("Initializing new game...");
         gameState.initGame();
+        updateWins();
         logger.debug("Starting with state: {}", GameState.stateToString(gameState.getCurrentState()) );
         drawState(gameState.getCurrentState());
         updateState();
@@ -165,6 +172,7 @@ public class GameController {
             logger.info("GAME OVER!\nThe winner is: {}", gameState.getWinner());
             turnLabel.setText("The winner is: " + gameState.getWinner());
             canInteract = false;
+            updateWins();
             // wait for new game button
             // init new game
         } else {
@@ -185,6 +193,18 @@ public class GameController {
     public void restart(ActionEvent event) {
         logger.info("New game button pressed.");
         initGame();
+    }
+
+    private void updateWins() {
+        String playerWinText = gameState.getHuman().getName() + "\nWins:\n";
+        for(int i = 0; i < gameState.getHuman().getWins(); i++)
+            playerWinText += "|";
+        playerName.setText(playerWinText);
+
+        String enemyWinText = gameState.getEnemy().getName() + "\nWins:\n";
+        for(int i = 0; i < gameState.getEnemy().getWins(); i++)
+            enemyWinText += "|";
+        botName.setText(enemyWinText);
     }
 
 }

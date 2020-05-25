@@ -28,4 +28,8 @@ public class Player {
         wins = 0;
     }
 
+    public void won() {
+        wins++;
+    }
+
 }

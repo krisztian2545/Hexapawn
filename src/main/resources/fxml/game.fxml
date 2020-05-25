@@ -49,5 +49,15 @@
             <Font size="20.0" />
          </font>
       </Button>
+      <Label fx:id="playerName" alignment="TOP_CENTER" layoutX="40.0" layoutY="32.0" prefHeight="450.0" prefWidth="170.0" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="botName" alignment="TOP_CENTER" layoutX="795.0" layoutY="32.0" prefHeight="450.0" prefWidth="170.0" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

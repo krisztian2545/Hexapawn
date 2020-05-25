@@ -235,6 +235,11 @@ public class GameState {
     public void checkGameOver() {
         checkGameState();
         if(gameOver) {
+            if(winner.equals(human.getName()))
+                human.won();
+            else
+                enemy.won();
+
             gameOver();
         } else {
             round++;
