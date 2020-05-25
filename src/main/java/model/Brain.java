@@ -59,7 +59,7 @@ public class Brain {
 
     /**
      *
-     * @param state
+     * @param state -
      * @return next move, represented by an integer; -1 if the given state is unknown
      */
     public int chooseMove(String state) {

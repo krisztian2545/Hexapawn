@@ -11,15 +11,22 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Extends the Player class with an importable/exportable Brain,
+ * goes in even number of rounds.
+ */
 @Data
 public class Bot extends Player {
 
-    //private Map<String, List<Integer>> defMoves = new HashMap<>();
     private Brain brain;
     private final String importPath = "brains/";
 
     private static Logger logger;
 
+    /**
+     * sets the name and loads the brain
+     * @param name - the name of the enemy and also the of the file containing his Brain
+     */
     public Bot(String name) {
         super(name);
 
@@ -32,6 +39,10 @@ public class Bot extends Player {
         logger.debug("The loaded brains moves: {}", brain.getPossibleMoves());
     }
 
+    /**
+     * sets the name and creates a new brain with the given parameters
+     * @param name - the name of the enemy and also the of the file containing his Brain
+     */
     public Bot(String name, boolean punish, boolean revard) {
         super(name);
 
@@ -43,6 +54,9 @@ public class Bot extends Player {
     }
 
 
+    /**
+     * loads the brain from the '/brains' folder from the .json with the same name as
+     */
     private void loadBrain() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 

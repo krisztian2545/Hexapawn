@@ -8,7 +8,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BrainTest {
+public class BrainTest {
 
     Brain brain;
 
