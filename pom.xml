@@ -7,6 +7,19 @@
     <groupId>org.example</groupId>
     <artifactId>Hexapawn</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <description>The hexapawn game.</description>
+
+    <scm>
+        <connection>https://github.com/jeszy75/rolling-cubes-game.git</connection>
+        <developerConnection>https://github.com/jeszy75/rolling-cubes-game.git</developerConnection>
+    </scm>
+    <developers>
+        <developer>
+            <id>krisztian2545</id>
+            <name>Nagy Krisztián</name>
+            <email>krisztian2545@gmail.com</email>
+        </developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -270,12 +283,4 @@
         </profile>
     </profiles>
 
-<!--
-    <distributionManagement>
-        <site>
-            <id>shrek</id>
-            <url>scp://@shrek.unideb.hu:/home/naitzsirk/public_html/${project.artifactId}</url>
-        </site>
-    </distributionManagement>
--->
 </project>
