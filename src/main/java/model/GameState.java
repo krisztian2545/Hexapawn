@@ -23,7 +23,10 @@ public class GameState {
 
     static Logger logger = LoggerFactory.getLogger(GameState.class);
 
-    private final int[] STARTING_STATE = new int[]{1, 2, 3, 7, 8, 9};
+    /**
+     * the starting state
+     */
+    static final int[] STARTING_STATE = new int[]{1, 2, 3, 7, 8, 9};
 
     public GameState(String username, String botname, boolean punish, boolean revard) {
         logger = LoggerFactory.getLogger(GameState.class);

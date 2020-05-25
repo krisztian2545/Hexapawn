@@ -20,7 +20,7 @@ public class Player {
     private int wins;
 
     /**
-     * sets the wins field to 0 and the player's name to the given value
+     * sets the {@code wins} field to 0 and the player's {@code name} to the given value
      * @param name the player's name
      */
     public Player(String name) {
@@ -28,6 +28,9 @@ public class Player {
         wins = 0;
     }
 
+    /**
+     * increases the {@code wins}' value by 1
+     */
     public void won() {
         wins++;
     }

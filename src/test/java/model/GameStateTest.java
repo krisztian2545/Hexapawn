@@ -89,7 +89,7 @@ public class GameStateTest {
         assertEquals("", testGameState.getWinner());
         assertEquals(1, testGameState.getRound());
         for(int i = 0; i < 6; i++)
-            assertEquals(testGameState.getSTARTING_STATE()[i], testGameState.getCurrentState()[i]);
+            assertEquals(GameState.STARTING_STATE[i], testGameState.getCurrentState()[i]);
     }
 
     @Test

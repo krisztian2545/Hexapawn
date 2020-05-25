@@ -128,10 +128,10 @@ public class GameController {
                 int move = normMove - (selectedPiece * 3);
                 logger.debug("Move to: {}", moveTo);
                 logger.debug("move = {}", move);
+                moveFrom = 0;
 
                 if( (normMove > -1) || (normMove < -3) ) {
                     logger.info("Illegal move!");
-                    moveFrom = 0;
                     drawState(gameState.getCurrentState());
                     return;
                 }
@@ -143,7 +143,6 @@ public class GameController {
                     checkGameOver();
                 } else {
                     logger.info("Illegal move!");
-                    moveFrom = 0;
                 }
 
             }
